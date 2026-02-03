@@ -38,6 +38,7 @@ async def on_ready():
     
 
 @bot.command()
+@commands.has_role("Slave keepers")
 async def jail(ctx, *, msg):
     if not check_role(ctx) : return
     msgs = str(msg).split()
@@ -75,6 +76,7 @@ async def jail(ctx, *, msg):
 
 
 @bot.command()
+@commands.has_role("Slave keepers")
 async def free(ctx, *, msg):
     if not check_role(ctx) : return
     msgs = str(msg).split()
@@ -84,6 +86,7 @@ async def free(ctx, *, msg):
         jail_list.remove(i)
 
 @bot.command()
+@commands.has_role("Slave keepers")
 async def renamejail(ctx, *, msg):
     if not check_role(ctx) : return
     global jail_name
