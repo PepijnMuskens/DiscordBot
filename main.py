@@ -4,6 +4,7 @@ import logging
 from dotenv import load_dotenv
 import os
 import time
+import webserver
 
 load_dotenv()
 
@@ -90,4 +91,6 @@ async def on_voice_state_update(member, before, after):
         channel = bot.get_channel(jail_channel_id)
         await member.move_to(channel)
 
+
+webserver.keep_alive()
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
