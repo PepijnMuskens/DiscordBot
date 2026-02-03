@@ -39,6 +39,7 @@ async def on_ready():
 
 @bot.command()
 async def jail(ctx, *, msg):
+    if not check_role(ctx) : return
     msgs = str(msg).split()
 
     user = await bot.fetch_user(msgs[0].removeprefix("<@").removesuffix(">"))
@@ -46,6 +47,12 @@ async def jail(ctx, *, msg):
     list = [j for j in jail_list if j.name == user]
     for i in list :
         jail_list.remove(i)
+
+    
+    if str(user) == "p1pp1n" :
+        print(str(user))
+        await ctx.author.send("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTJiNjI4NzRpbjI0aTgxZHU0dHhzdzFlbXFjMHI2M2pod2RrczV0cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xVrhwVA3nTrOuhrtGN/giphy.gif")
+        return
 
     #add new sentence to list
     jail_list.append(Prisoner(user,"",int(msgs[1])))
@@ -69,6 +76,7 @@ async def jail(ctx, *, msg):
 
 @bot.command()
 async def free(ctx, *, msg):
+    if not check_role(ctx) : return
     msgs = str(msg).split()
     user = await bot.fetch_user(msgs[0].removeprefix("<@").removesuffix(">"))
     list = [j for j in jail_list if j.name == user]
@@ -77,6 +85,7 @@ async def free(ctx, *, msg):
 
 @bot.command()
 async def renamejail(ctx, *, msg):
+    if not check_role(ctx) : return
     global jail_name
     jail_name = msg
     await ctx.send(f"Jail has been renamed to {msg}")
@@ -90,6 +99,10 @@ async def on_voice_state_update(member, before, after):
     if len(list) > 0 and after.channel.id != before.channel.id and after.channel.id != jail_channel_id:
         channel = bot.get_channel(jail_channel_id)
         await member.move_to(channel)
+
+def check_role(ctx):
+    print(ctx)
+    return True
 
 
 webserver.keep_alive()
